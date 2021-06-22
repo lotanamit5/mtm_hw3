@@ -28,11 +28,20 @@ def final_grade(input_path: str, output_path: str) -> int:
             # info = line.split(',')
             # student_id, name, semester, avg = info[0], info[1], info[2], info[3]\
             student_id, name, semester, avg = line.split(',', 4)
+            
+            print(student_id, name, semester, avg)
+            print(student_id.isdecimal() and student_id[0] != '0' and len(student_id) == 8)
+            print(name.isalpha())
+            print(semester.isdecimal() and int(semester) >= 1)
+            print(avg.isdecimal() and int(avg) > 50 and int(avg) <= 100)
+            print()
+            
             if(student_id.isdecimal() and student_id[0] != '0' and len(student_id) == 8
                and name.isalpha()
                and semester.isdecimal() and int(semester) >= 1
                and avg.isdecimal() and int(avg) > 50 and int(avg) <= 100):
                 dict[student_id] = avg
+                
 
     totalgrade = 0
     # write the dict to the output file and calculate the course avg:
@@ -79,7 +88,6 @@ def check_strings_v2(s1: str, s2: str) -> bool:
     for c in s1:
         if c in letters:
             letters.remove(c)
-            print(letters)
         else:
             return False
     return True
