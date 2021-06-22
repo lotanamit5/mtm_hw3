@@ -12,10 +12,19 @@ def main():
     # assert course_avg == 70
 
     # Testing the `check_strings` function
-    # s1 = 'naanb'
-    # s2 = 'baNaNa'
-    # result = check_strings(s1=s1, s2=s2)
-    # assert result
+    bases = ['abcabc', 'baNaNa']
+    tries = [['aabbcc', 'caba', 'aaa'],
+             ['naanb', 'ananas', 'bannn']]
+    results = [[True, True, False],
+               [True, False, False]]
+
+    for i, s2 in enumerate(bases):
+        for j, s1 in enumerate(tries[i]):
+            print("Test", j+1, 'on', s2, "trying", s1)
+            res = check_strings_v2(s1, s2)
+            if(res != results[i][j]):
+                print("TEST FAILED:", s1, s2, "returned:", res)
+    print("finished tests!")
 
 
 if __name__ == "__main__":
