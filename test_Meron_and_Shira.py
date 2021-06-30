@@ -1,6 +1,5 @@
 from gradesCalc import *
-
-
+import difflib
 
 
 # Testing your implemented functions, feel free to add more tests below
@@ -8,14 +7,21 @@ def main():
     # Testing the `final_grade` function
     input_path = 'tests/input'
     output_path = 'tests/out'
+    expected_path = 'tests/expected_out'
     course_avg = final_grade(input_path=input_path, output_path=output_path)
     assert course_avg == 70
-    tests_courses_avgs = [0,64,61,88,65,68]
-    
+    tests_courses_avgs = [0, 64, 61, 88, 65, 68]
+
     for i in range(6):
-        course_avg = final_grade(input_path=input_path+str(i), output_path=output_path+str(i))
+        course_avg = final_grade(
+            input_path=input_path+str(i), output_path=output_path+str(i))
         assert tests_courses_avgs[i] == course_avg
-    
+        with open(output_path+str(i)) as f1:
+            f1_text = f1.read()
+        with open(expected_path+str(i)) as f2:
+            f2_text = f2.read()
+        for line in difflib.unified_diff(f1_text, f2_text, fromfile=output_path+str(i), tofile=expected_path+str(i), lineterm=''):
+            print(line)
 
     # Testing the `check_strings` function
     s1 = 'naanb'
@@ -23,33 +29,34 @@ def main():
     result = check_strings(s1=s1, s2=s2)
     assert result
 
-    
-    is_constructed_from = check_strings("aabbcc","abcabc")
+    is_constructed_from = check_strings("aabbcc", "abcabc")
     assert is_constructed_from is True
-    is_constructed_from = check_strings("caba","abcabc")
+    is_constructed_from = check_strings("caba", "abcabc")
     assert is_constructed_from is True
-    is_constructed_from = check_strings("aaa","abcabc")
+    is_constructed_from = check_strings("aaa", "abcabc")
     assert is_constructed_from is False
-    is_constructed_from = check_strings("naanb","baNaNa")
-    assert is_constructed_from is True   
-    is_constructed_from = check_strings("ananas","baNaNa")
-    assert is_constructed_from is False  
-    is_constructed_from = check_strings("bannn","baNaNa")   
-    assert is_constructed_from is False    
-    
-    is_constructed_from = check_strings("","")
-    assert is_constructed_from is True  
-    is_constructed_from = check_strings("a","")
-    assert is_constructed_from is False  
-    is_constructed_from = check_strings("","a")
-    assert is_constructed_from is True  
-    is_constructed_from = check_strings("Sarah","Haras")
-    assert is_constructed_from is True  
-    is_constructed_from = check_strings("St","sttt")
-    assert is_constructed_from is True  
-    is_constructed_from = check_strings("sttt","st")
-    assert is_constructed_from is False 
-    is_constructed_from = check_strings("Knockout","Knock out")
-    assert is_constructed_from is True          
+    is_constructed_from = check_strings("naanb", "baNaNa")
+    assert is_constructed_from is True
+    is_constructed_from = check_strings("ananas", "baNaNa")
+    assert is_constructed_from is False
+    is_constructed_from = check_strings("bannn", "baNaNa")
+    assert is_constructed_from is False
+
+    is_constructed_from = check_strings("", "")
+    assert is_constructed_from is True
+    is_constructed_from = check_strings("a", "")
+    assert is_constructed_from is False
+    is_constructed_from = check_strings("", "a")
+    assert is_constructed_from is True
+    is_constructed_from = check_strings("Sarah", "Haras")
+    assert is_constructed_from is True
+    is_constructed_from = check_strings("St", "sttt")
+    assert is_constructed_from is True
+    is_constructed_from = check_strings("sttt", "st")
+    assert is_constructed_from is False
+    is_constructed_from = check_strings("Knockout", "Knock out")
+    assert is_constructed_from is True
+
+
 if __name__ == "__main__":
     main()
